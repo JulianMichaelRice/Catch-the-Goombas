@@ -1,8 +1,7 @@
 """
-Julian Michael Rice: SuperCoding 2019
-Welcome to Python: Advanced Projects!
-
-Week 4 - PyGame: Catch the Goombas
+Julian Michael Rice
+PyGame: Catch the Goombas
+January 2019
 """
 import pygame, time, random
 
