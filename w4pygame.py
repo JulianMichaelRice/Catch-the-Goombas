@@ -3,7 +3,7 @@ Julian Michael Rice
 PyGame: Catch the Goombas
 January 2019
 """
-import pygame, time, random
+import pygame, time, random, os
 
 #Some colors and other constants for us to use (RGB)
 WHITE = (255, 255, 255)     #Alpha is another possible parameter to use
@@ -15,12 +15,14 @@ BLUE  = (  0,   0, 255)
 #Grade Constants
 SS = 100 ; S = 70 ; A = 50 ; B = 35 ; C = 25 ; D = 15 ; F = 0
 
+cwd = os.getcwd() #Current working directory
+
 #We are going to initialize pygame
 pygame.init()
 
 #Setting up a song to play during the game
-song = 'C:/Users/Julian Michael Rice/Documents/w4.ogg'
-pygame.mixer.music.load(song)
+song_path = cwd + '/w4.ogg'
+pygame.mixer.music.load(song_path)
 pygame.mixer.music.play(1)
 
 #Setting up some system variables and timing
@@ -47,8 +49,7 @@ class Player():
         #Setting up the player's sprite and loading the image
         pygame.sprite.Sprite.__init__(self)
         
-        #Note, you will have to modify this path on your own!
-        self.image = pygame.image.load('C:/Users/Julian Michael Rice/Documents/player.png')
+        self.image = pygame.image.load(cwd+"/player.png")
 
         #General private variables
         self.lead_x = DISPLAY_W/2   #Current x position
@@ -162,22 +163,23 @@ def message_to_screen(message, color, width=DISPLAY_W/2, height=DISPLAY_H/2):
 def calculateGrade(score):
     "Calculate the player's grade from the number of points scored"
     grade = ""
-    if (player.getScore() > SS):
+		score = player.getScore()
+    if (score > SS):
         grade = "SS"
         difference = 0
-    elif (player.getScore() > S):
+    elif (score > S):
         grade = "S"
         difference = SS - player.getScore()
-    elif (player.getScore() > A):
+    elif (score > A):
         grade = "A"
         difference = S - player.getScore()
-    elif (player.getScore() > B):
+    elif (score > B):
         grade = "B"
         difference = A - player.getScore()
-    elif (player.getScore() > C):
+    elif (score > C):
         grade = "C"
         difference = B - player.getScore()
-    elif (player.getScore() > D):
+    elif (score > D):
         grade = "D"
         difference = C - player.getScore()
     else:
@@ -199,13 +201,13 @@ def gameLoop():
 
     goomba_width = 30               #Width of the green goal object
     goomba_height = 30              #Height of the green goal object
-    goomba_image = pygame.image.load("C:/Users/Julian Michael Rice/Documents/greenba.png")
+    goomba_image = pygame.image.load(cwd+"/greenba.png")
     goomba_form = goomba_image.get_rect()
 
     mario_bots = []                 #List of all current mario bots (to draw out later)
     mario_width = 30                #Width of one mario bot
     mario_height = 30               #Height of one mario bot
-    mario_image = pygame.image.load("C:/Users/Julian Michael Rice/Documents/enemy.png")
+    mario_image = pygame.image.load(cwd+"/enemy.png")
     mario_form = mario_image.get_rect()
 
     #Random location placement for goombas
