@@ -1,7 +1,8 @@
 """
 Julian Michael Rice
 PyGame: Catch the Goombas
-January 2019
+v1 January 2019
+v2 May - June 2019 (in development)
 """
 import pygame, time, random, os
 
@@ -21,7 +22,7 @@ cwd = os.getcwd() #Current working directory
 pygame.init()
 
 #Setting up a song to play during the game
-song_path = cwd + '/w4.ogg'
+song_path = cwd + '/Assets/music1.ogg'
 pygame.mixer.music.load(song_path)
 pygame.mixer.music.play(1)
 
@@ -49,7 +50,7 @@ class Player():
         #Setting up the player's sprite and loading the image
         pygame.sprite.Sprite.__init__(self)
         
-        self.image = pygame.image.load(cwd+"/player.png")
+        self.image = pygame.image.load(cwd+"/Assets/player.png")
 
         #General private variables
         self.lead_x = DISPLAY_W/2   #Current x position
@@ -201,13 +202,13 @@ def gameLoop():
 
     goomba_width = 30               #Width of the green goal object
     goomba_height = 30              #Height of the green goal object
-    goomba_image = pygame.image.load(cwd+"/greenba.png")
+    goomba_image = pygame.image.load(cwd+"/Assets/greenba.png")
     goomba_form = goomba_image.get_rect()
 
     mario_bots = []                 #List of all current mario bots (to draw out later)
     mario_width = 30                #Width of one mario bot
     mario_height = 30               #Height of one mario bot
-    mario_image = pygame.image.load(cwd+"/enemy.png")
+    mario_image = pygame.image.load(cwd+"/Assets/enemy.png")
     mario_form = mario_image.get_rect()
 
     #Random location placement for goombas
