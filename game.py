@@ -37,7 +37,7 @@ font = pygame.font.SysFont(None, 40)
 
 #Set up the game display and window text
 gameDisplay = pygame.display.set_mode((DISPLAY_W, DISPLAY_H))
-pygame.display.set_caption('Practical Coding 2019 - Julian!')
+pygame.display.set_caption('Catch the Goombas!')
 
 #The game can be restarted until the user inputs Q after a game over
 gameContinue = True
@@ -57,7 +57,7 @@ class Player():
         self.lead_y = DISPLAY_H/2   #Current y position
         self.lead_x_change = 0      #Movement in x direction
         self.lead_y_change = 0      #Movement in y direction
-        self.block_velocity = 5     #Player's velocity
+        self.block_velocity = 10    #Player's velocity
         self.block_width = 30       #Player's body's width
         self.block_height = 30      #Player's body's height
         self.sprint_constant = 2    #Sprint speed
@@ -142,8 +142,9 @@ class Player():
     def setForm(self):
         "Generate the player's body (form) for a single frame"
         self.form.x, self.form.y = self.lead_x, self.lead_y
-        #First part of the tutorial (below)
-        #self.form = pygame.Rect(self.lead_x, self.lead_y, self.block_width, self.block_height)
+
+# Insert Finished Enemy Class Below #
+# -
 
 ##---- General Functions ----##
 def text_objects(text, color):
@@ -163,30 +164,37 @@ def message_to_screen(message, color, width=DISPLAY_W/2, height=DISPLAY_H/2):
 
 def calculateGrade(score):
     "Calculate the player's grade from the number of points scored"
-    grade = ""
-		score = player.getScore()
+    grade = ""                      #Rank represented by a string variable
+    difference = 0                  #Difference between obtained score and next rank
+
     if (score > SS):
         grade = "SS"
-        difference = 0
     elif (score > S):
         grade = "S"
-        difference = SS - player.getScore()
+        difference = SS - score
     elif (score > A):
         grade = "A"
-        difference = S - player.getScore()
+        difference = S - score
     elif (score > B):
         grade = "B"
-        difference = A - player.getScore()
+        difference = A - score
     elif (score > C):
         grade = "C"
-        difference = B - player.getScore()
+        difference = B - score
     elif (score > D):
         grade = "D"
-        difference = C - player.getScore()
+        difference = C - score
     else:
         grade = "F"
-        difference = D - player.getScore()
+        difference = D - score
+
     return difference, grade
+
+class Enemy():
+    "Class definition for the enemy of the game."
+    def __init__(self):
+        "Initialize the enemy"
+        #--
 
 def gameLoop():
     "Overall game flow function"
@@ -261,6 +269,11 @@ def gameLoop():
                 
             #Check for a key pressing event
             if event.type == pygame.KEYDOWN:
+                #Check for sprinting (left shift)
+                if event.key == pygame.K_LSHIFT:
+                    player.setNewCoord("x", player.getNewCoord("x") * player.getBlockParameters("sprint"))
+                    player.setNewCoord("y", player.getNewCoord("y") * player.getBlockParameters("sprint"))
+
                 #Note that the origin of the window is at the top left-most spot.
                 #Check for general movement (arrow keys)
                 if event.key == pygame.K_LEFT:
@@ -272,10 +285,7 @@ def gameLoop():
                 elif event.key == pygame.K_DOWN:
                     player.setNewCoord("y", player.getBlockParameters("velocity"))
 
-                #Check for sprinting (left shift)
-                if event.key == pygame.K_LSHIFT:
-                    player.setNewCoord("x", player.getNewCoord("x") * player.getBlockParameters("sprint"))
-                    player.setNewCoord("y", player.getNewCoord("y") * player.getBlockParameters("sprint"))
+                
             
             #Stop moving when the key is released
             if event.type == pygame.KEYUP:
